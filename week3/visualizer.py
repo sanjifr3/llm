@@ -24,7 +24,7 @@ class TokenPredictor:
             model=self.model_name,
             messages=[{"role": "user", "content": prompt}],
             max_tokens=max_tokens,
-            temperature=0,  # Use temperature 0 for deterministic output
+            temperature=0,  # Use temperature 0 for deterministic output - always takes highest probability token
             logprobs=True,
             seed=42,
             top_logprobs=3,  # Get top 3 token predictions
