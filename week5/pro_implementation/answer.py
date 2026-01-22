@@ -127,11 +127,11 @@ def fetch_context_unranked(question):
 
 def fetch_context(original_question):
     rewritten_question = rewrite_query(original_question)
-    chunks1 = fetch_context_unranked(original_question)
-    chunks2 = fetch_context_unranked(rewritten_question)
-    chunks = merge_chunks(chunks1, chunks2)
-    reranked = rerank(original_question, chunks)
-    return reranked[:FINAL_K]
+    chunks1 = fetch_context_unranked(original_question) # Fetch context based on the original question
+    chunks2 = fetch_context_unranked(rewritten_question) # Fetch context based on the rewritten question
+    chunks = merge_chunks(chunks1, chunks2) # Combine both sets of chunks
+    reranked = rerank(original_question, chunks) # Rerank based on the original question
+    return reranked[:FINAL_K] # Return the top FINAL_K chunks
 
 
 @retry(wait=wait)

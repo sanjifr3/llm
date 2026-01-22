@@ -51,11 +51,11 @@ def answer_question(question: str, history: list[dict] = []) -> tuple[str, list[
     Answer the given question with RAG; return the answer and the context documents.
     """
     combined = combined_question(question, history)
-    docs = fetch_context(combined)
+    docs = fetch_context(combined) # Can fetch context based on the last message or the entire history. If only last, could fail for multi-part questions.
     context = "\n\n".join(doc.page_content for doc in docs)
     system_prompt = SYSTEM_PROMPT.format(context=context)
     messages = [SystemMessage(content=system_prompt)]
-    messages.extend(convert_to_messages(history))
+    messages.extend(convert_to_messages(history)) # Converts openai history to langchain messages with HumanMessage and AIMessage
     messages.append(HumanMessage(content=question))
     response = llm.invoke(messages)
     return response.content, docs
